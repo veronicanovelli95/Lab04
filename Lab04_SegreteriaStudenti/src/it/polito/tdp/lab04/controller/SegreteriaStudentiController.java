@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class SegreteriaStudentiController {
 
@@ -28,8 +29,9 @@ public class SegreteriaStudentiController {
 	@FXML
 	private Button btnCercaCorsi;
 
-	@FXML
-	private Button btnCercaNome;
+
+    @FXML
+    private ImageView btnCercaNome;
 
 	@FXML
 	private TextArea txtResult;
@@ -50,27 +52,39 @@ public class SegreteriaStudentiController {
 	private TextField txtCognome;
 
 	public void setModel(Model model) {
-
+      this.model = model;
+      comboCorso.getItems().addAll(model.getCorsi());
 	}
 
 	@FXML
 	void doReset(ActionEvent event) {
-
+      txtMatricola.clear();
+      txtNome.clear();
+      txtCognome.clear();
+      txtResult.clear();
 	}
 
 	@FXML
 	void doCercaNome(ActionEvent event) {
-
+     String s = txtMatricola.getText();
+     Studente stu = model.cercaStudente(s);
+     txtNome.setText(stu.getNome());
+     txtCognome.setText(stu.getCognome());
 	}
+
+	
 
 	@FXML
 	void doCercaIscrittiCorso(ActionEvent event) {
-
+     Corso c = comboCorso.getValue();
+     String result=model.getStudentiIscrittiAlCorso(c).toString();
+     txtResult.setText( result);
+     
 	}
 
 	@FXML
 	void doCercaCorsi(ActionEvent event) {
-
+    
 	}
 
 	@FXML
@@ -90,6 +104,7 @@ public class SegreteriaStudentiController {
 		assert btnIscrivi != null : "fx:id=\"btnIscrivi\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
 		assert txtMatricola != null : "fx:id=\"txtMatricola\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
 		assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
+		
 	}
 
 }

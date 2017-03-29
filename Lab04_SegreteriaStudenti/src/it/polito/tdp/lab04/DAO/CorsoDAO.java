@@ -21,7 +21,8 @@ public class CorsoDAO {
 		final String sql = "SELECT * FROM corso";
 
 		List<Corso> corsi = new LinkedList<Corso>();
-
+		
+		
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
@@ -29,9 +30,11 @@ public class CorsoDAO {
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
-
+				
 				// Crea un nuovo JAVA Bean Corso
 				// Aggiungi il nuovo Corso alla lista
+				Corso c = new Corso(rs.getString("codins"), rs.getInt("crediti"),rs.getString("nome"),rs.getInt("pd"));
+				corsi.add(c);
 			}
 
 			return corsi;
@@ -53,7 +56,34 @@ public class CorsoDAO {
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
 	public void getStudentiIscrittiAlCorso(Corso corso) {
-		// TODO
+		String cod = corso.getCodins();
+		
+		final String sql = "SELECT matricola, nome, cognome, CDS FROM studente WHERE matricola IN (SELECT matricola FROM iscrizione WHERE codins = ?) ";
+
+		List<Studente> studenti = new LinkedList<Studente>();
+		
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			st.setString(1, cod);
+			
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				
+				
+				Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),rs.getString("cognome"),rs.getString("CDS"));
+				studenti.add(s);
+			}
+		
+              corso.setStudenti(studenti);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
 	}
 
 	/*
