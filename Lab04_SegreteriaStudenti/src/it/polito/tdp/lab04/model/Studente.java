@@ -1,5 +1,7 @@
 package it.polito.tdp.lab04.model;
 
+import java.util.List;
+
 import it.polito.tdp.lab04.DAO.CorsoDAO;
 
 public class Studente {
@@ -7,6 +9,8 @@ public class Studente {
 	 private String nome;
 	 private String cognome;
 	 private String CDS;
+	 List<Corso> corsi;
+	 
 	public Studente(int matricola, String nome, String cognome, String cDS) {
 		super();
 		this.matricola = matricola;
@@ -42,6 +46,14 @@ public class Studente {
 	public String getCDS() {
 		return CDS;
 	}
+	public List<Corso> getCorsi() {
+		return corsi;
+	}
+	public void setCorsi(List<Corso> corsi) {
+		this.corsi = corsi;
+	}
+	
+	
 	
 	
 	 

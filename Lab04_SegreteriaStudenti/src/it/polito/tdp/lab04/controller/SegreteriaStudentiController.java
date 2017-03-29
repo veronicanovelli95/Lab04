@@ -67,7 +67,8 @@ public class SegreteriaStudentiController {
 	@FXML
 	void doCercaNome(ActionEvent event) {
      String s = txtMatricola.getText();
-     Studente stu = model.cercaStudente(s);
+     int k = Integer.parseInt(s);
+     Studente stu = model.cercaStudente(k);
      txtNome.setText(stu.getNome());
      txtCognome.setText(stu.getCognome());
 	}
@@ -84,7 +85,7 @@ public class SegreteriaStudentiController {
 
 	@FXML
 	void doCercaCorsi(ActionEvent event) {
-    
+      String studente =  txtMatricola.getText();
 	}
 
 	@FXML
